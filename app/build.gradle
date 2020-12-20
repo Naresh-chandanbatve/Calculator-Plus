@@ -14,10 +14,19 @@ android {
         buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + System.currentTimeMillis() + "L)"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs { 
+   	    release { 
+       	    keyAlias System.getenv("KEYSTORE_ALIAS") 
+            keyPassword System.getenv("KEYSTORE_ALIAS_PASS")
+            storeFile file(System.getenv("KEYSTORE")) 
+            storePassword System.getenv("KEYSTORE_PASS")
+        } 
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
